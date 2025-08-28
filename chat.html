@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MCP Legal Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>MCP Legal Chatbot</h1>
+    <div id="chat-box" style="height:400px; overflow-y:scroll; border:1px solid #ccc; padding:10px;">
+        {% for message in chat_history %}
+            <p><strong>You:</strong> {{ message.user }}</p>
+            <p><strong>Bot:</strong> {{ message.bot }}</p>
+            <hr>
+        {% endfor %}
+    </div>
+
+    <form method="post" action="/send">
+        <input type="text" name="user_input" style="width:80%" placeholder="Ask a question..." required>
+        <button type="submit">Send</button>
+    </form>
+
+    <hr>
+    <h3>Upload Document or PDF</h3>
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".pdf,.txt,.md,.json,.xml,.html,.csv" required>
+        <button type="submit">Upload & Ingest</button>
+    </form>
+    {% if upload_status %}
+        <p style="color:green;">{{ upload_status }}</p>
+    {% endif %}
+</body>
+</html>
